@@ -50,7 +50,6 @@
             <th th:text="#{contrat.client}">Client</th>
             <th th:text="#{contrat.date.debut}">Date de début</th>
             <th th:text="#{contrat.date.fin}">Date de fin</th>
-            <th th:text="#{contrat.statut}">Statut</th>
         </tr>
         </thead>
         <tbody>
@@ -59,10 +58,6 @@
             <td th:text="${contrat.client.nom} + ' ' + ${contrat.client.prenom}">Nom Prénom</td>
             <td th:text="${contrat.dateDebut}">2025-01-01</td>
             <td th:text="${contrat.dateFin}">2025-04-01</td>
-            <td>
-                <span th:if="${contrat.statut}" class="badge bg-success" th:text="#{contrat.active}">Actif</span>
-                <span th:if="${!contrat.statut}" class="badge bg-danger" th:text="#{contrat.inactive}">Inactif</span>
-            </td>
         </tr>
         <tr th:if="${#lists.isEmpty(contrats)}">
             <td colspan="5" class="text-center" th:text="#{contrat.list.empty}">Aucun contrat trouvé</td>

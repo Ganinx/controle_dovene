@@ -35,8 +35,8 @@
     <tbody>
     <tr th:each="contrat : ${contrats}">
         <td th:text="${contrat.id}">Identifiant</td>
-        <td th:text="${contrat.voiture}">Immatriculation</td>
-        <td th:text="${contrat.client}">Identifiant</td>
+        <td th:text="${contrat.voiture.modele}">Immatriculation</td>
+        <td th:text="${contrat.client.nom}">Identifiant</td>
         <td th:text="${contrat.dateDebut}">Date de début</td>
         <td th:text="${contrat.dateFin}">Date de fin</td>
         <td>
