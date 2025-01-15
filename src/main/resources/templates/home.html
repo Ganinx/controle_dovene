@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{app.title}">Accueil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+
+<div th:insert="common/menu :: menu"></div>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4" th:text="#{home.page.title}">Page d'accueil</h1>
+
+    <!-- Récapitulatif rapide -->
+    <div class="row text-center mb-5">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="#{home.carCount.title}">Nombre de voitures disponibles</h5>
+                    <p class="card-text fs-3" th:text="${nbrVoiture}">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="#{home.contractCount.title}">Nombre de contrats en cours</h5>
+                    <p class="card-text fs-3" th:text="${nbrContrat}">0</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="#{home.clientCount.title}">Nombre de clients</h5>
+                    <p class="card-text fs-3" th:text="${nbrClient}">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liste des contrats -->
+    <h2 class="mb-4" th:text="#{home.contractsEnding.title}">Contrats se terminant dans moins de 3 mois</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th th:text="#{contrat.id}">ID</th>
+            <th th:text="#{contrat.client}">Client</th>
+            <th th:text="#{contrat.date.debut}">Date de début</th>
+            <th th:text="#{contrat.date.fin}">Date de fin</th>
+            <th th:text="#{contrat.statut}">Statut</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="contrat : ${contrats}">
+            <td th:text="${contrat.id}">1</td>
+            <td th:text="${contrat.client.nom} + ' ' + ${contrat.client.prenom}">Nom Prénom</td>
+            <td th:text="${contrat.dateDebut}">2025-01-01</td>
+            <td th:text="${contrat.dateFin}">2025-04-01</td>
+            <td>
+                <span th:if="${contrat.statut}" class="badge bg-success" th:text="#{contrat.active}">Actif</span>
+                <span th:if="${!contrat.statut}" class="badge bg-danger" th:text="#{contrat.inactive}">Inactif</span>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(contrats)}">
+            <td colspan="5" class="text-center" th:text="#{contrat.list.empty}">Aucun contrat trouvé</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>

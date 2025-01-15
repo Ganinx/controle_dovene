@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${!isEditMode} ? #{voiture.form.add} : #{voiture.form.edit}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div th:insert="~{common/menu :: menu}"></div>
+
+<h1 class="text-center" th:text="${!isEditMode} ? #{voiture.form.add} : #{voiture.form.edit}"></h1>
+
+<form th:action="@{/voitures/post}" th:object="${voiture}" method="post" class="container mt-4">
+    <div class="mb-3">
+        <label th:text="#{voiture.immatriculation}" class="form-label">Immatriculation :</label>
+        <input type="text" th:field="*{immatriculation}" th:readonly="${isEditMode} ? true : false" class="form-control"/>
+        <span class="text-danger" th:if="${#fields.hasErrors('immatriculation')}" th:errors="*{immatriculation}">Erreur</span>
+    </div>
+
+    <div class="mb-3">
+        <label th:text="#{voiture.modele}" class="form-label">Modèle :</label>
+        <input type="text" th:field="*{modele}" class="form-control"/>
+        <span class="text-danger" th:if="${#fields.hasErrors('modele')}" th:errors="*{modele}">Erreur</span>
+    </div>
+
+    <div class="mb-3">
+        <label th:text="#{voiture.marque}" class="form-label">Marque :</label>
+        <input type="text" th:field="*{marque}" class="form-control"/>
+        <span class="text-danger" th:if="${#fields.hasErrors('marque')}" th:errors="*{marque}">Erreur</span>
+    </div>
+
+    <div class="mb-3">
+        <label th:text="#{voiture.categorie}" for="carCategory" class="form-label">Catégorie :</label>
+        <select id="categorie" th:field="*{categorie}" class="form-select">
+            <option value="" disabled selected>Choisissez une catégorie</option>
+            <option th:each="category : ${carCategories}" th:value="${category.label}" th:text="${category.label}"></option>
+        </select>
+        <span class="text-danger" th:if="${#fields.hasErrors('categorie')}" th:errors="*{categorie}">Erreur</span>
+    </div>
+
+    <div class="mb-3 form-check">
+        <input type="checkbox" th:field="*{statut}" class="form-check-input" />
+        <label th:text="#{voiture.statut}" class="form-check-label">Statut : Disponible</label>
+        <span class="text-danger" th:if="${#fields.hasErrors('statut')}" th:errors="*{statut}">Erreur</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary" th:text="#{save}">Enregistrer</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

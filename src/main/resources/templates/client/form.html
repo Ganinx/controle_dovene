@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Set the title dynamically based on the mode (Add/Edit) -->
+    <title th:text="${!isEditMode} ? #{client.form.add} : #{client.form.edit}"></title>
+    <!-- Bootstrap CSS for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+
+<!-- Insert the common menu (assuming it's defined in a common fragment) -->
+<div th:insert="~{common/menu :: menu}"></div>
+
+<!-- Heading that changes based on the mode -->
+<h1 th:text="${!isEditMode} ? #{client.form.add} : #{client.form.edit}"></h1>
+
+<!-- Start of the form to add or edit a client -->
+<form th:action="@{/clients/post}" th:object="${client}" method="post">
+
+    <!-- Client Name Field -->
+    <div>
+        <label th:text="#{client.nom}">Nom :</label>
+        <input type="text" th:field="*{nom}" />
+        <span class="error-message" th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}">Erreur</span>
+        <br /><br />
+    </div>
+
+    <!-- Client Surname Field -->
+    <div>
+        <label th:text="#{client.prenom}">Prénom :</label>
+        <input type="text" th:field="*{prenom}"/>
+        <span class="error-message" th:if="${#fields.hasErrors('prenom')}" th:errors="*{prenom}">Erreur</span>
+        <br /><br />
+    </div>
+
+    <!-- Client Email Field -->
+    <div>
+        <label th:text="#{client.email}">Email :</label>
+        <input type="email" th:field="*{email}" />
+        <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Erreur</span>
+        <br /><br />
+    </div>
+
+    <!-- Client License Number Field -->
+    <div>
+        <label th:text="#{client.permis}">Numéro de permis :</label>
+        <input type="text" th:field="*{permis}" />
+        <span class="error-message" th:if="${#fields.hasErrors('permis')}" th:errors="*{permis}">Erreur</span>
+        <br /><br />
+    </div>
+
+    <!-- Client Date of Birth Field -->
+    <div>
+        <label th:text="#{client.dateNaissance}">Date de naissance :</label>
+        <input type="date" th:field="*{dateNaissance}" />
+        <span class="error-message" th:if="${#fields.hasErrors('dateNaissance')}" th:errors="*{dateNaissance}">Erreur</span>
+        <br /><br />
+    </div>
+
+    <!-- Client Gender Field (Radio Buttons) -->
+    <div>
+        <label th:text="#{client.genre}">Genre :</label>
+        <div>
+            <input type="radio" id="homme" th:field="*{genre}" value="Homme" />
+            <label for="homme" th:text="#{client.genre.male}">Homme</label>
+            <input type="radio" id="femme" th:field="*{genre}" value="Femme" />
+            <label for="femme" th:text="#{client.genre.female}">Femme</label>
+            <input type="radio" id="autre" th:field="*{genre}" value="Autre" />
+            <label for="autre" th:text="#{client.genre.other}">Autre</label>
+        </div>
+        <span class="error-message" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}">Erreur</span>
+        <br /><br />
+    </div>
+
+    <!-- Client Account Blocked Checkbox -->
+    <div>
+        <label th:text="#{client.isBloque}">Compte bloqué :</label>
+        <input type="checkbox" th:field="*{isBloque}" />
+        <span class="error-message" th:if="${#fields.hasErrors('isBloque')}" th:errors="*{isBloque}">Erreur</span>
+        <br /><br />
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" th:text="#{save}">Enregistrer</button>
+</form>
+
+<!-- Bootstrap JS for interaction functionality -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>

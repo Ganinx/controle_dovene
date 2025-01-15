@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{voiture.list.title}">Liste des voitures</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div th:insert="~{common/menu :: menu}"></div>
+
+<div class="container mt-4">
+    <h1 th:text="#{voiture.list.title}">Liste des voitures</h1>
+
+    <!-- Lien pour ajouter une nouvelle voiture -->
+    <a th:href="@{/voitures/add}" class="btn btn-success mb-3" th:text="#{voiture.add}">Ajouter une voiture</a>
+
+    <div th:if="${voitures.isEmpty()}" class="alert alert-warning">
+        <p th:text="#{voiture.list.empty}">Aucune voiture enregistrée.</p>
+    </div>
+
+    <table th:unless="${voitures.isEmpty()}" class="table table-bordered table-striped">
+        <thead class="table-light">
+        <tr>
+            <th th:text="#{voiture.immatriculation}">Immatriculation</th>
+            <th th:text="#{voiture.modele}">Modèle</th>
+            <th th:text="#{voiture.marque}">Marque</th>
+            <th th:text="#{voiture.categorie}">Catégorie</th>
+            <th th:text="#{voiture.statut}">Statut</th>
+            <th th:text="#{actions}">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="voiture : ${voitures}">
+            <td th:text="${voiture.immatriculation}">Immatriculation</td>
+            <td th:text="${voiture.modele}">Modèle</td>
+            <td th:text="${voiture.marque}">Marque</td>
+            <td th:text="${voiture.categorie}">Catégorie</td>
+            <td th:text="${voiture.statut}">Statut</td>
+            <td>
+                <a th:href="@{/voitures/edit/{ref}(ref=${voiture.immatriculation})}" class="btn btn-primary btn-sm" th:text="#{edit}">Modifier</a>
+                &nbsp;|&nbsp;
+                <a th:href="@{/voitures/delete/{ref}(ref=${voiture.immatriculation})}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Voulez-vous vraiment supprimer cette voiture ?');" th:text="#{delete}">Supprimer</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
